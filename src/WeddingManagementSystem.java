@@ -6,83 +6,76 @@ public class WeddingManagementSystem extends JFrame {
     // Constructor to set up the JFrame
     public WeddingManagementSystem() {
         // Set up JFrame properties
-        setTitle("Wedding Management System");
+        setTitle("Home Screen");
         setSize(800, 600);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Main Panel
-        JPanel mainPanel = new JPanel(new CardLayout());
+        // Background Panel
+        JPanel backgroundPanel = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                super.paintComponent(g);
+                // Load the background image
+                ImageIcon backgroundImage = new ImageIcon("boutique2.jpg"); // Replace with your image path
+                g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
+            }
+        };
+        backgroundPanel.setLayout(new BorderLayout()); // Set layout for background panel
 
-        // Home Panel
-        JPanel homePanel = new JPanel();
-        homePanel.setLayout(new GridLayout(3, 1, 10, 10));
-        JLabel welcomeLabel = new JLabel("Welcome to the Wedding Management System", JLabel.CENTER);
-        welcomeLabel.setFont(new Font("Serif", Font.BOLD, 18));
-        JButton venueButton = new JButton("Manage Venues");
-        JButton guestButton = new JButton("Manage Guests");
-        JButton summaryButton = new JButton("Generate Summary");
+        // Header panel for the title
+        JPanel headerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        headerPanel.setOpaque(false); // Make the header panel transparent
+        JLabel welcomeLabel = new JLabel("Welcome to The Wedding System Management");
+        welcomeLabel.setFont(new Font("Felix Titling", Font.BOLD, 40)); // Customize font
+        welcomeLabel.setForeground(Color.white); // Text color
+        headerPanel.add(welcomeLabel);
 
-        homePanel.add(welcomeLabel);
-        homePanel.add(venueButton);
-        homePanel.add(guestButton);
-        homePanel.add(summaryButton);
+        // Content panel with GridLayout for buttons
+        JPanel buttonPanel = new JPanel(new GridLayout(6, 1, 10, 10));
+        buttonPanel.setOpaque(false); // Make the panel transparent
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(50, 200, 50, 200)); // Add padding around the grid
 
-        // Venue Management Panel
-        JPanel venuePanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        JLabel venueNameLabel = new JLabel("Venue Name:");
-        JTextField venueNameField = new JTextField();
-        JLabel venueCapacityLabel = new JLabel("Capacity:");
-        JTextField venueCapacityField = new JTextField();
-        JButton saveVenueButton = new JButton("Save Venue");
-        JButton backToHomeFromVenue = new JButton("Back to Home");
+        // Create buttons
+        JButton malayPackage = new JButton("MALAY PACKAGE");
+        JButton chinesePackage = new JButton("CHINESE PACKAGE");
+        JButton indianPackage = new JButton("INDIAN PACKAGE");
+        JButton westernPackage = new JButton("WESTERN PACKAGE");
+        JButton services = new JButton("SERVICES");
+        JButton logoutButton = new JButton("Log Out");
 
-        venuePanel.add(venueNameLabel);
-        venuePanel.add(venueNameField);
-        venuePanel.add(venueCapacityLabel);
-        venuePanel.add(venueCapacityField);
-        venuePanel.add(saveVenueButton);
-        venuePanel.add(backToHomeFromVenue);
+        // Add buttons to the grid
+        buttonPanel.add(malayPackage);
+        buttonPanel.add(chinesePackage);
+        buttonPanel.add(indianPackage);
+        buttonPanel.add(westernPackage);
+        buttonPanel.add(services);
+        buttonPanel.add(logoutButton);
 
-        // Guest Management Panel
-        JPanel guestPanel = new JPanel(new GridLayout(4, 2, 10, 10));
-        JLabel guestNameLabel = new JLabel("Guest Name:");
-        JTextField guestNameField = new JTextField();
-        JLabel guestCountLabel = new JLabel("Guest Count:");
-        JTextField guestCountField = new JTextField();
-        JButton saveGuestButton = new JButton("Save Guest");
-        JButton backToHomeFromGuest = new JButton("Back to Home");
+        // Add panels to the background panel
+        backgroundPanel.add(headerPanel, BorderLayout.NORTH); // Header at the top
+        backgroundPanel.add(buttonPanel, BorderLayout.EAST); // Buttons in the center
 
-        guestPanel.add(guestNameLabel);
-        guestPanel.add(guestNameField);
-        guestPanel.add(guestCountLabel);
-        guestPanel.add(guestCountField);
-        guestPanel.add(saveGuestButton);
-        guestPanel.add(backToHomeFromGuest);
+        // Add the background panel to the frame
+        setContentPane(backgroundPanel);
 
-        // Summary Panel
-        JPanel summaryPanel = new JPanel(new BorderLayout());
-        JTextArea summaryTextArea = new JTextArea();
-        JButton backToHomeFromSummary = new JButton("Back to Home");
-        summaryPanel.add(new JScrollPane(summaryTextArea), BorderLayout.CENTER);
-        summaryPanel.add(backToHomeFromSummary, BorderLayout.SOUTH);
+        setVisible(true);
+    }
 
-        // Add Panels to Main Panel
-        mainPanel.add(homePanel, "Home");
-        mainPanel.add(venuePanel, "Venue");
-        mainPanel.add(guestPanel, "Guest");
-        mainPanel.add(summaryPanel, "Summary");
+    public static void main(String[] args) {
+        WeddingManagementSystem app = new WeddingManagementSystem();
+    }
+}
 
-        // Add Main Panel to JFrame
-        add(mainPanel);
 
-        // Set up Card Layout
-        CardLayout cardLayout = (CardLayout) mainPanel.getLayout();
 
-        // Button Actions
-        venueButton.addActionListener(e -> cardLayout.show(mainPanel, "Venue"));
-        guestButton.addActionListener(e -> cardLayout.show(mainPanel, "Guest"));
-        summaryButton.addActionListener(e -> {
+
+
+
+        /*/ Button Actions
+        malayPackage.addActionListener(e -> cardLayout.show(mainPanel, "Venue"));
+        chinesePackage.addActionListener(e -> cardLayout.show(mainPanel, "Guest"));
+        indianPackage.addActionListener(e -> {
             summaryTextArea.setText("Summary of Data:\n");
             // Placeholder for real data logic
             summaryTextArea.append("Venue Details and Guest List will go here.\n");
@@ -95,13 +88,7 @@ public class WeddingManagementSystem extends JFrame {
         backToHomeFromVenue.addActionListener(e -> cardLayout.show(mainPanel, "Home"));
         backToHomeFromGuest.addActionListener(e -> cardLayout.show(mainPanel, "Home"));
         backToHomeFromSummary.addActionListener(e -> cardLayout.show(mainPanel, "Home"));
-    }
+    }*/
 
-    // Main Method
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            WeddingManagementSystem app = new WeddingManagementSystem();
-            app.setVisible(true);
-        });
-    }
-}
+
+
