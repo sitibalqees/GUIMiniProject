@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class WeddingManagementSystem extends JFrame {
 
@@ -18,7 +20,14 @@ public class WeddingManagementSystem extends JFrame {
                 super.paintComponent(g);
                 // Load the background image
                 ImageIcon backgroundImage = new ImageIcon("boutique2.jpg"); // Replace with your image path
-                g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
+                if (backgroundImage.getImageLoadStatus() == MediaTracker.COMPLETE) {
+                    g.drawImage(backgroundImage.getImage(), 0, 0, getWidth(), getHeight(), this);
+                } else {
+                    g.setColor(Color.BLACK);
+                    g.fillRect(0, 0, getWidth(), getHeight());
+                    g.setColor(Color.WHITE);
+                    g.drawString("Background image not found", 20, 20);
+                }
             }
         };
         backgroundPanel.setLayout(new BorderLayout()); // Set layout for background panel
@@ -28,7 +37,7 @@ public class WeddingManagementSystem extends JFrame {
         headerPanel.setOpaque(false); // Make the header panel transparent
         JLabel welcomeLabel = new JLabel("Welcome to The Wedding System Management");
         welcomeLabel.setFont(new Font("Felix Titling", Font.BOLD, 40)); // Customize font
-        welcomeLabel.setForeground(Color.white); // Text color
+        welcomeLabel.setForeground(Color.WHITE); // Text color
         headerPanel.add(welcomeLabel);
 
         // Content panel with GridLayout for buttons
@@ -44,6 +53,16 @@ public class WeddingManagementSystem extends JFrame {
         JButton services = new JButton("SERVICES");
         JButton logoutButton = new JButton("Log Out");
 
+        // Create and assign a single ButtonHandler instance
+        ButtonHandler handler = new ButtonHandler();
+
+        malayPackage.addActionListener(handler);
+        chinesePackage.addActionListener(handler);
+        indianPackage.addActionListener(handler);
+        westernPackage.addActionListener(handler);
+        services.addActionListener(handler);
+        logoutButton.addActionListener(handler);
+
         // Add buttons to the grid
         buttonPanel.add(malayPackage);
         buttonPanel.add(chinesePackage);
@@ -54,13 +73,55 @@ public class WeddingManagementSystem extends JFrame {
 
         // Add panels to the background panel
         backgroundPanel.add(headerPanel, BorderLayout.NORTH); // Header at the top
-        backgroundPanel.add(buttonPanel, BorderLayout.EAST); // Buttons in the center
+        backgroundPanel.add(buttonPanel, BorderLayout.CENTER); // Buttons in the center
 
         // Add the background panel to the frame
         setContentPane(backgroundPanel);
 
         setVisible(true);
     }
+
+    // ButtonHandler class to handle button actions
+    private class ButtonHandler implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            String command = e.getActionCommand();
+            switch (command) {
+                case "MALAY PACKAGE":
+                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Malay Package Selected");
+                    new DressCatalogM();
+                    break;
+
+                case "CHINESE PACKAGE":
+                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Chinese Package Selected");
+                    new DressCatalogC();
+                    break;
+
+                case "INDIAN PACKAGE":
+                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Indian Package Selected");
+                    new DressCatalogI();
+                    break;
+
+                case "WESTERN PACKAGE":
+                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Western Package Selected");
+                    new DressCatalogW();
+                    break;
+
+                case "SERVICES":
+                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Services Selected");
+                    break;
+
+                case "Log Out":
+                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Logging Out...");
+                    System.exit(0);
+                    break;
+
+                default:
+                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Unknown Action");
+            }
+        }
+    }
+
 
     public static void main(String[] args) {
         WeddingManagementSystem app = new WeddingManagementSystem();
@@ -70,25 +131,6 @@ public class WeddingManagementSystem extends JFrame {
 
 
 
-
-
-        /*/ Button Actions
-        malayPackage.addActionListener(e -> cardLayout.show(mainPanel, "Venue"));
-        chinesePackage.addActionListener(e -> cardLayout.show(mainPanel, "Guest"));
-        indianPackage.addActionListener(e -> {
-            summaryTextArea.setText("Summary of Data:\n");
-            // Placeholder for real data logic
-            summaryTextArea.append("Venue Details and Guest List will go here.\n");
-            cardLayout.show(mainPanel, "Summary");
-        });
-
-        saveVenueButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Venue Saved!"));
-        saveGuestButton.addActionListener(e -> JOptionPane.showMessageDialog(this, "Guest Saved!"));
-
-        backToHomeFromVenue.addActionListener(e -> cardLayout.show(mainPanel, "Home"));
-        backToHomeFromGuest.addActionListener(e -> cardLayout.show(mainPanel, "Home"));
-        backToHomeFromSummary.addActionListener(e -> cardLayout.show(mainPanel, "Home"));
-    }*/
 
 
 
