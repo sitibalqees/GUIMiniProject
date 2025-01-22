@@ -3,7 +3,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class DressCatalogW extends JFrame{
-    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Dress> selectedDressesW = new ArrayList<>();
     private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
 
     public DressCatalogW() {
@@ -11,10 +11,14 @@ public class DressCatalogW extends JFrame{
 
         JFrame frame = new JFrame("Dress Catalog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 800); // Larger frame size for better layout
+        frame.setSize(800, 600);
 
         // Main frame layout
         frame.setLayout(new BorderLayout());
+
+        // Make the frame full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        setUndecorated(false);
 
         // Add a title at the top
         JLabel titleLabel = new JLabel("Dress Catalog", JLabel.CENTER);
@@ -31,11 +35,11 @@ public class DressCatalogW extends JFrame{
                 {"Mermaid Wedding Dresses Off Shoulder", "608.50", "Dress/MermaidDress.png"},
                 {"V-Neck Long Sleeves Lace Dress", "838.00", "Dress/VNeckDress.png"},
                 {"Sheath Off Shoulder Lace Chiffon Wedding Dress", "829.20", "Dress/SheathDress.png"},
-                {"Bridelily Lace-up Off Shoulder Appliques Tulle", "1,234.30", "Dress/DarkBlueGown.png"},
+                {"Bridelily Lace-up Off Shoulder Appliques Tulle", "1234.30", "Dress/DarkBlueGown.png"},
                 {"Enchanting Lace Princess Wedding Gown with Long Train and Embroidery", "749.80", "Dress/EnchantingLace.png"},
-                {"Cap Sleeve Scoop A-line Long Custom Dress", "1,802.50", "Dress/CapSleeve.png"},
+                {"Cap Sleeve Scoop A-line Long Custom Dress", "1802.50", "Dress/CapSleeve.png"},
                 {"Dark Green Suit", "834.20", "Dress/GreenSuit.png"},
-                {"Noah Slim Fit Piti Checkered White Tuxedo", "2,237.00", "Dress/WhiteTuxedo.png"},
+                {"Noah Slim Fit Piti Checkered White Tuxedo", "2237.00", "Dress/WhiteTuxedo.png"},
                 {"Men Black 3 piece Suit", "937.00", "Dress/BlackSuit.png"}
         };
 
@@ -105,7 +109,7 @@ public class DressCatalogW extends JFrame{
                 int quantity = Integer.parseInt(quantityField.getText());
                 if (quantity > 0) {
                     Dress selectedDress = new Dress(dress[0], dress[1], quantity,dress[2]);
-                    selectedDresses.add(selectedDress);
+                    selectedDressesW.add(selectedDress);
                     JOptionPane.showMessageDialog(frame, dress[0] + " added to cart.");
                 } else {
                     JOptionPane.showMessageDialog(frame, "Please select a quantity.");
@@ -142,7 +146,7 @@ public class DressCatalogW extends JFrame{
         nextButton.setBackground(Color.GREEN);
         nextButton.setForeground(Color.WHITE);
         nextButton.setFocusPainted(false);
-        nextButton.addActionListener(e -> new Accessories(selectedDresses)); // Navigate to Accessories frame
+        nextButton.addActionListener(e -> new Accessories(selectedDressesW)); // Navigate to Accessories frame
         topPanel.add(nextButton, BorderLayout.EAST);
 
         // Add the panel containing both buttons to the top (NORTH) region of the frame

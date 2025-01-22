@@ -15,7 +15,14 @@ public class LoginFrame extends JFrame implements ActionListener {
 
     public LoginFrame() {
         super.setTitle("Please Login");
-        super.setSize(300, 400);
+        super.setSize(800, 600);
+
+        // Make the frame full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        setUndecorated(false);
+
+        // Set beige background for the entire frame
+        super.getContentPane().setBackground(new Color(255,229,204));
 
         prepareCenterPanel();
         prepareSouthPanel();
@@ -27,10 +34,10 @@ public class LoginFrame extends JFrame implements ActionListener {
     private void prepareSouthPanel() {
         JPanel pnlSouth = new JPanel();
         pnlSouth.setLayout(new FlowLayout());
+        pnlSouth.setBackground(new Color(255,229,204)); // Beige background
 
         btnLogin = new JButton("Login");
         btnRegister = new JButton("Register");
-
 
         // Register btnLogin to listener
         btnLogin.addActionListener(this);
@@ -50,11 +57,13 @@ public class LoginFrame extends JFrame implements ActionListener {
     private void prepareCenterPanel() {
         JPanel pnlLogo = new JPanel();
         pnlLogo.setLayout(new FlowLayout());
+        pnlLogo.setBackground(new Color(255,229,204)); // Beige background
+
         try {
             BufferedImage myPicture = ImageIO.read(new File("logo.jpg"));
             ImageIcon imgIcon = new ImageIcon(myPicture);
             Image scaledImage = imgIcon.getImage()
-                    .getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
+                    .getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
             JLabel logo = new JLabel(new ImageIcon(scaledImage));
             pnlLogo.add(logo);
         } catch (IOException ioe) {
@@ -63,6 +72,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 
         JPanel pnlForm = new JPanel();
         pnlForm.setLayout(new GridLayout(4, 2));
+        pnlForm.setBackground(new Color(255,229,204)); // Beige background
 
         lblUsername = new JLabel("Username:");
         lblUsername.setFont(new Font("Arial", Font.BOLD, 30));
@@ -78,7 +88,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 
         chkShowPassword = new JCheckBox("Show Password");
         chkShowPassword.setFont(new Font("Arial", Font.BOLD, 30));
-
+        chkShowPassword.setBackground(new Color(255,229,204)); // Match checkbox background
 
         chkShowPassword.addActionListener(e -> {
             if (chkShowPassword.isSelected()) {
@@ -97,6 +107,7 @@ public class LoginFrame extends JFrame implements ActionListener {
 
         JPanel pnlCenter = new JPanel();
         pnlCenter.setLayout(new GridLayout(2, 1));
+        pnlCenter.setBackground(new Color(255,229,204)); // Beige background
         pnlCenter.add(pnlLogo);
         pnlCenter.add(pnlForm);
 

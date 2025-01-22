@@ -3,16 +3,20 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class DressCatalogI extends JFrame{
-    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Dress> selectedDressesI = new ArrayList<>();
     private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
 
     public DressCatalogI() {
         JFrame frame = new JFrame("Dress Catalog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 800); // Larger frame size for better layout
+        frame.setSize(800, 600); // Larger frame size for better layout
 
         // Main frame layout
         frame.setLayout(new BorderLayout());
+
+        // Make the frame full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        setUndecorated(false);
 
         // Add a title at the top
         JLabel titleLabel = new JLabel("Dress Catalog", JLabel.CENTER);
@@ -26,14 +30,14 @@ public class DressCatalogI extends JFrame{
 
         // Example data for dresses (name, price, image path)
         String[][] dressData = {
-                {"Bride And Baraat Cherry Red Fully Embroidered Lavish Lahengga ", "7,331.00", "Dress/CherryLahengga.png"},
-                {"Bloom Pink Bridal Lahengga In Raw Silk With Hand Embroidery", "15,525.00", "Dress/BloomPinkLahengga.png"},
-                {"Yellow Embroidered Bridal Lahengga and Blouse Set with Mirror Work", "6,026.00", "Dress/YellowLahengga.png"},
-                {"Dark Blue Embroidered Gown With Wings", "2,921.00", "Dress/DarkBlueGown.png"},
-                {"Poseidon Teal Circular Flared Gown With Fancy Sleeves", "3,101.00", "Dress/TealGown.png"},
-                {"Beige Heavy Embroidered Gown With Jacket", "18,896.00", "Dress/BeigeGown.png"},
-                {"Beige Paisely Printed Sherwani With Resham Work For Men", "1,121.00", "Dress/BeigePaisely.png"},
-                {"Peach Silk Jodhpuri Suit", "1,188.00", "Dress/peachSilk.png"},
+                {"Bride And Baraat Cherry Red Fully Embroidered Lavish Lahengga ", "7331.00", "Dress/CherryLahengga.png"},
+                {"Bloom Pink Bridal Lahengga In Raw Silk With Hand Embroidery", "15525.00", "Dress/BloomPinkLahengga.png"},
+                {"Yellow Embroidered Bridal Lahengga and Blouse Set with Mirror Work", "6026.00", "Dress/YellowLahengga.png"},
+                {"Dark Blue Embroidered Gown With Wings", "2921.00", "Dress/DarkBlueGown.png"},
+                {"Poseidon Teal Circular Flared Gown With Fancy Sleeves", "3101.00", "Dress/TealGown.png"},
+                {"Beige Heavy Embroidered Gown With Jacket", "18896.00", "Dress/BeigeGown.png"},
+                {"Beige Paisely Printed Sherwani With Resham Work For Men", "1121.00", "Dress/BeigePaisely.png"},
+                {"Peach Silk Jodhpuri Suit", "1188.00", "Dress/peachSilk.png"},
                 {"Yellow Foil Printed Kurta Jacket Set For Men", "581.00", "Dress/YellowKurta.png"}
         };
 
@@ -103,7 +107,7 @@ public class DressCatalogI extends JFrame{
                 int quantity = Integer.parseInt(quantityField.getText());
                 if (quantity > 0) {
                     Dress selectedDress = new Dress(dress[0], dress[1], quantity , dress[2]);
-                    selectedDresses.add(selectedDress);
+                    selectedDressesI.add(selectedDress);
                     JOptionPane.showMessageDialog(frame, dress[0] + " added to cart.");
                 } else {
                     JOptionPane.showMessageDialog(frame, "Please select a quantity.");
@@ -141,7 +145,7 @@ public class DressCatalogI extends JFrame{
         nextButton.setForeground(Color.WHITE);
         nextButton.setFocusPainted(false);
         nextButton.addActionListener(e -> {
-            new Accessories(selectedDresses);
+            new Accessories(selectedDressesI);
             this.dispose(); // Close the current frame
         });
         topPanel.add(nextButton, BorderLayout.EAST);

@@ -5,13 +5,13 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class DressCatalogC extends JFrame {
-    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Dress> selectedDressesC = new ArrayList<>();
     private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
 
     public DressCatalogC(){
         JFrame frame = new JFrame("Dress Catalog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 800); // Larger frame size for better layout
+        frame.setSize(800, 600); // Larger frame size for better layout
 
         // Main frame layout
         frame.setLayout(new BorderLayout());
@@ -29,12 +29,12 @@ public class DressCatalogC extends JFrame {
         // Example data for dresses (name, price, image path)
         String[][] dressData = {
                 {"White Cheongsam Qipao ", "845.00", "Dress/Qipao.png"},
-                {"Jade Bespoke Dress [Mermaid]", "3,970.00", "Dress/JadeDress.png"},
-                {"Sahra Bespoke Jumpsuit | Modern Vietnamese Chinese", "2.964.00", "Dress/SahraJumpsuit.png"},
-                {"Phoebe Bespoke Dress | Traditional Wedding Dress", "2,964.00", "Dress/PhoebeDress.png"},
-                {"Mindy Bespoke Dress | Red & Gold Chinese", "3,970.00", "Dress/Mindy.png"},
-                {"Kelly Bespoke Dress | Modern Vietnamese Wedding Dress", "2,964.00", "Dress/kellyDress.png"},
-                {"Wedding Qun Kwa Dress and Tang Suit | Golden Couple", "1,925.00", "Dress/GoldenCouple.png"},
+                {"Jade Bespoke Dress [Mermaid]", "3970.00", "Dress/JadeDress.png"},
+                {"Sahra Bespoke Jumpsuit | Modern Vietnamese Chinese", "2964.00", "Dress/SahraJumpsuit.png"},
+                {"Phoebe Bespoke Dress | Traditional Wedding Dress", "2964.00", "Dress/PhoebeDress.png"},
+                {"Mindy Bespoke Dress | Red & Gold Chinese", "3970.00", "Dress/Mindy.png"},
+                {"Kelly Bespoke Dress | Modern Vietnamese Wedding Dress", "2964.00", "Dress/kellyDress.png"},
+                {"Wedding Qun Kwa Dress and Tang Suit | Golden Couple", "1925.00", "Dress/GoldenCouple.png"},
                 {"Traditional Vietnamese Ao Dai", "187.00", "Dress/AoDai.png"},
                 {"Chinese Mandarin Tang Jacket (Black) | Spring", "336.00", "Dress/TangJacket.png"}
         };
@@ -105,7 +105,7 @@ public class DressCatalogC extends JFrame {
                 int quantity = Integer.parseInt(quantityField.getText());
                 if (quantity > 0) {
                     Dress selectedDress = new Dress(dress[0], dress[1], quantity,dress[2]);
-                    selectedDresses.add(selectedDress);
+                    selectedDressesC.add(selectedDress);
                     JOptionPane.showMessageDialog(frame, dress[0] + " added to cart.");
                 } else {
                     JOptionPane.showMessageDialog(frame, "Please select a quantity.");
@@ -142,7 +142,7 @@ public class DressCatalogC extends JFrame {
         nextButton.setBackground(Color.GREEN);
         nextButton.setForeground(Color.WHITE);
         nextButton.setFocusPainted(false);
-        nextButton.addActionListener(e -> new Accessories(selectedDresses)); // Navigate to Accessories frame
+        nextButton.addActionListener(e -> new Accessories(selectedDressesC)); // Navigate to Accessories frame
         topPanel.add(nextButton, BorderLayout.EAST);
 
         // Add the panel containing both buttons to the top (NORTH) region of the frame

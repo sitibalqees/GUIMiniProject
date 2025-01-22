@@ -5,13 +5,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class DressCatalogM extends JFrame {
-    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Dress> selectedDressesM = new ArrayList<>();
     private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
 
     public DressCatalogM() {
         JFrame frame = new JFrame("Dress Catalog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(1200, 800); // Larger frame size for better layout
+        frame.setSize(800, 600); // Larger frame size for better layout
+
+        // Make the frame full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        setUndecorated(false);
 
         // Main frame layout
         frame.setLayout(new BorderLayout());
@@ -105,7 +109,7 @@ public class DressCatalogM extends JFrame {
                 int quantity = Integer.parseInt(quantityField.getText());
                 if (quantity > 0) {
                     Dress selectedDress = new Dress(dress[0], dress[1], quantity,dress[2]);
-                    selectedDresses.add(selectedDress);
+                    selectedDressesM.add(selectedDress);
                     JOptionPane.showMessageDialog(frame, dress[0] + " added to cart.");
                 } else {
                     JOptionPane.showMessageDialog(frame, "Please select a quantity.");
@@ -145,7 +149,7 @@ public class DressCatalogM extends JFrame {
         nextButton.setFocusPainted(false);
         nextButton.addActionListener(e -> {
             // Pass the selected dresses to the Checkout class
-            new Accessories(selectedDresses);
+            new Accessories(selectedDressesM);
             this.dispose();
         });
         topPanel.add(nextButton, BorderLayout.EAST);

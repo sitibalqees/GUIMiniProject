@@ -30,6 +30,10 @@ public class Accessories extends JFrame {
         // Create a container panel for the title and back button
         JPanel northPanel = new JPanel(new BorderLayout());
 
+        // Make the frame full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        setUndecorated(false);
+
         // Title label
         JLabel titleLabel = new JLabel("ACCESSORIES", JLabel.CENTER);
         titleLabel.setFont(new Font("Felix Titling", Font.BOLD, 40));

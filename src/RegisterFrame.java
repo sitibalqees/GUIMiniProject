@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 public class RegisterFrame extends JFrame implements ActionListener {
 
     private JLabel lblUsername, lblPassword, lblConfirmPassword;
@@ -18,7 +17,10 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
     public RegisterFrame() {
         super.setTitle("Register");
-        super.setSize(300, 400);
+        super.setSize(1600, 800);
+
+        // Set beige background for the entire frame
+        super.getContentPane().setBackground(new Color(255,229,204)); // Beige color
 
         prepareCenterPanel();
         prepareSouthPanel();
@@ -29,21 +31,29 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
     private void prepareSouthPanel() {
         btnRegister = new JButton("Register");
+        btnRegister.setFont(new Font("Arial", Font.BOLD, 20));
 
         // Register btnRegister to listener
         btnRegister.addActionListener(this);
 
-        super.getContentPane().add(btnRegister, BorderLayout.SOUTH);
+        // Add padding and background color for the button panel
+        JPanel pnlSouth = new JPanel();
+        pnlSouth.setBackground(new Color(255,229,204)); // Match the frame's background color
+        pnlSouth.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        pnlSouth.add(btnRegister);
+
+        super.getContentPane().add(pnlSouth, BorderLayout.SOUTH);
     }
 
     private void prepareCenterPanel() {
         JPanel pnlLogo = new JPanel();
         pnlLogo.setLayout(new FlowLayout());
+        pnlLogo.setBackground(new Color(255,229,204)); // Match the frame's background color
         try {
             BufferedImage myPicture = ImageIO.read(new File("logo.jpg"));
             ImageIcon imgIcon = new ImageIcon(myPicture);
             Image scaledImage = imgIcon.getImage()
-                    .getScaledInstance(150, 150, java.awt.Image.SCALE_SMOOTH);
+                    .getScaledInstance(300, 300, java.awt.Image.SCALE_SMOOTH);
             JLabel logo = new JLabel(new ImageIcon(scaledImage));
             pnlLogo.add(logo);
         } catch (IOException ioe) {
@@ -52,6 +62,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
         JPanel pnlForm = new JPanel();
         pnlForm.setLayout(new GridLayout(4, 2));
+        pnlForm.setBackground(new Color(255,229,204)); // Match the frame's background color
 
         lblUsername = new JLabel("Username:");
         lblUsername.setFont(new Font("Arial", Font.BOLD, 30));
@@ -67,6 +78,8 @@ public class RegisterFrame extends JFrame implements ActionListener {
         txtConfirmPassword.setFont(new Font("Arial", Font.BOLD, 30));
         chkShowPassword = new JCheckBox("Show Password");
 
+        // Match checkbox background to frame's color
+        chkShowPassword.setBackground(new Color(255,229,204));
         chkShowPassword.addActionListener(e -> {
             if (chkShowPassword.isSelected()) {
                 txtPassword.setEchoChar((char) 0);
@@ -88,6 +101,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
 
         JPanel pnlCenter = new JPanel();
         pnlCenter.setLayout(new GridLayout(2, 1));
+        pnlCenter.setBackground(new Color(255,229,204)); // Match the frame's background color
         pnlCenter.add(pnlLogo);
         pnlCenter.add(pnlForm);
 
@@ -101,7 +115,7 @@ public class RegisterFrame extends JFrame implements ActionListener {
             String password = String.valueOf(txtPassword.getPassword());
             String confirmPassword = String.valueOf(txtConfirmPassword.getPassword());
 
-            if (username.isEmpty() || password.isEmpty() || confirmPassword.isEmpty()) {
+            if (username.isEmpty() ||  password.isEmpty() ||  confirmPassword.isEmpty()) {
                 JOptionPane.showMessageDialog(null, "All fields must be filled!", "Validation Error", JOptionPane.ERROR_MESSAGE);
                 return;
             }

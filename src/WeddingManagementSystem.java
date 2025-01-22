@@ -13,6 +13,10 @@ public class WeddingManagementSystem extends JFrame {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
+        // Make the frame full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        setUndecorated(false);
+
         // Background Panel
         JPanel backgroundPanel = new JPanel() {
             @Override
@@ -50,7 +54,6 @@ public class WeddingManagementSystem extends JFrame {
         JButton chinesePackage = new JButton("CHINESE PACKAGE");
         JButton indianPackage = new JButton("INDIAN PACKAGE");
         JButton westernPackage = new JButton("WESTERN PACKAGE");
-        JButton services = new JButton("SERVICES");
         JButton logoutButton = new JButton("Log Out");
 
         // Create and assign a single ButtonHandler instance
@@ -60,7 +63,6 @@ public class WeddingManagementSystem extends JFrame {
         chinesePackage.addActionListener(handler);
         indianPackage.addActionListener(handler);
         westernPackage.addActionListener(handler);
-        services.addActionListener(handler);
         logoutButton.addActionListener(handler);
 
         // Add buttons to the grid
@@ -68,7 +70,6 @@ public class WeddingManagementSystem extends JFrame {
         buttonPanel.add(chinesePackage);
         buttonPanel.add(indianPackage);
         buttonPanel.add(westernPackage);
-        buttonPanel.add(services);
         buttonPanel.add(logoutButton);
 
         // Add panels to the background panel
@@ -105,10 +106,6 @@ public class WeddingManagementSystem extends JFrame {
                 case "WESTERN PACKAGE":
                     JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Western Package Selected");
                     new DressCatalogW();
-                    break;
-
-                case "SERVICES":
-                    JOptionPane.showMessageDialog(WeddingManagementSystem.this, "Services Selected");
                     break;
 
                 case "Log Out":

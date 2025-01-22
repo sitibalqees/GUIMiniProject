@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Checkout {
@@ -53,15 +54,16 @@ public class Checkout {
         // Save Button
         JButton saveButton = new JButton("Save Information");
         saveButton.addActionListener(e -> {
-            try (BufferedWriter bw = new BufferedWriter(new FileWriter("customer_info.txt"))) {
-                bw.write("FirstName\t\tLastName\t\tEmail\t\t\tPhoneNo\t\tAddress\t\tCity\t\tState\t\tZipCode");
-                bw.newLine();
-                bw.write("========================================================================================================\n");
-                bw.write( firstNameField.getText()+"\t\t" +lastNameField.getText()
-                        +"\t\t" +emailField.getText()+"\t\t" +phoneField.getText()
-                        +"\t\t" +addressField.getText()+"\t\t" +cityField.getText()+"\t\t"
-                        +stateField.getText()+"\t\t" +zipField.getText() +"\n" );
-
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("customer_info.txt"))) {
+                writer.write("First Name: " + firstNameField.getText() + "\n");
+                writer.write("Last Name: " + lastNameField.getText() + "\n");
+                writer.write("Email: " + emailField.getText() + "\n");
+                writer.write("Phone: " + phoneField.getText() + "\n");
+                writer.write("Address: " + addressField.getText() + "\n");
+                writer.write("City: " + cityField.getText() + "\n");
+                writer.write("State: " + stateField.getText() + "\n");
+                writer.write("ZIP Code: " + zipField.getText() + "\n");
+                writer.write("========================================================================================");
                 JOptionPane.showMessageDialog(checkoutFrame, "Customer information saved successfully!");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(checkoutFrame, "Error saving information: " + ex.getMessage());
@@ -72,13 +74,13 @@ public class Checkout {
         // Add padding
         customerInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Right-hand side: Selected Dresses and Accessories
+        // Selected Dresses and Accessories
         JPanel itemsPanel = new JPanel();
         itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
         itemsPanel.add(new JLabel("Selected Dresses and Accessories"));
+        itemsPanel.setFont(new Font("Felix Titling", Font.BOLD, 25));
         itemsPanel.add(Box.createVerticalStrut(10)); // Add spacing
-
-        Font itemFont = new Font("Arial", Font.PLAIN, 14);
+        Font itemFont = new Font("Serif", Font.PLAIN, 20);
 
         // Add Dresses
         for (Dress dress : selectedDresses) {
@@ -130,10 +132,22 @@ public class Checkout {
         });
 
         // Add the preview button to the frame
+        JPanel buttonPreview = new JPanel();
+        buttonPreview.add(previewButton);
+        checkoutFrame.add(buttonPreview, BorderLayout.SOUTH);
+
+        // Create a Back Button
+        JButton backButton = new JButton("Back");
+        backButton.addActionListener(e -> {
+            checkoutFrame.dispose(); // Close the Checkout frame
+            new Accessories((ArrayList<Dress>) selectedDresses); // Open the Accessories frame
+        });
+
+        // Add buttons to the frame
         JPanel buttonPanel = new JPanel();
+        buttonPanel.add(backButton);
         buttonPanel.add(previewButton);
         checkoutFrame.add(buttonPanel, BorderLayout.SOUTH);
-
 
         // Add the split pane to the frame
         checkoutFrame.add(splitPane);
