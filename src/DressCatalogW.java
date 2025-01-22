@@ -1,7 +1,11 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class DressCatalogW extends JFrame{
+    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
+
     public DressCatalogW() {
 
 
@@ -24,15 +28,15 @@ public class DressCatalogW extends JFrame{
 
         // Example data for dresses (name, price, image path)
         String[][] dressData = {
-                {"Mermaid Wedding Dresses Off Shoulder", "608.50", "MermaidDress.png"},
-                {"V-Neck Long Sleeves Lace Dress", "838.00", "VNeckDress.png"},
-                {"Sheath Off Shoulder Lace Chiffon Wedding Dress", "829.20", "SheathDress.png"},
-                {"Bridelily Lace-up Off Shoulder Appliques Tulle", "1,234.30", "DarkBlueGown.png"},
-                {"Enchanting Lace Princess Wedding Gown with Long Train and Embroidery", "749.80", "EnchantingLace.png"},
-                {"Cap Sleeve Scoop A-line Long Custom Dress", "1,802.50", "CapSleeve.png"},
-                {"Dark Green Suit", "834.20", "GreenSuit.png"},
-                {"Noah Slim Fit Piti Checkered White Tuxedo", "2,237.00", "WhiteTuxedo.png"},
-                {"Men Black 3 piece Suit", "937.00", "BlackSuit.png"}
+                {"Mermaid Wedding Dresses Off Shoulder", "608.50", "Dress/MermaidDress.png"},
+                {"V-Neck Long Sleeves Lace Dress", "838.00", "Dress/VNeckDress.png"},
+                {"Sheath Off Shoulder Lace Chiffon Wedding Dress", "829.20", "Dress/SheathDress.png"},
+                {"Bridelily Lace-up Off Shoulder Appliques Tulle", "1,234.30", "Dress/DarkBlueGown.png"},
+                {"Enchanting Lace Princess Wedding Gown with Long Train and Embroidery", "749.80", "Dress/EnchantingLace.png"},
+                {"Cap Sleeve Scoop A-line Long Custom Dress", "1,802.50", "Dress/CapSleeve.png"},
+                {"Dark Green Suit", "834.20", "Dress/GreenSuit.png"},
+                {"Noah Slim Fit Piti Checkered White Tuxedo", "2,237.00", "Dress/WhiteTuxedo.png"},
+                {"Men Black 3 piece Suit", "937.00", "Dress/BlackSuit.png"}
         };
 
         // Loop to create each item in the grid
@@ -95,6 +99,20 @@ public class DressCatalogW extends JFrame{
             panel.add(dressPrice);
             panel.add(quantityPanel);
 
+            // Store dress data when quantity is greater than 0
+            JButton addButton = new JButton("Add to Cart");
+            addButton.addActionListener(e -> {
+                int quantity = Integer.parseInt(quantityField.getText());
+                if (quantity > 0) {
+                    Dress selectedDress = new Dress(dress[0], dress[1], quantity,dress[2]);
+                    selectedDresses.add(selectedDress);
+                    JOptionPane.showMessageDialog(frame, dress[0] + " added to cart.");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Please select a quantity.");
+                }
+            });
+            panel.add(addButton);
+
             // Add panel to grid
             gridPanel.add(panel);
         }
@@ -102,24 +120,39 @@ public class DressCatalogW extends JFrame{
         // Add grid panel to the center
         frame.add(new JScrollPane(gridPanel), BorderLayout.CENTER);
 
-        // Add a "Checkout" button at the bottom
-        JButton checkoutButton = new JButton("Checkout");
-        checkoutButton.setFont(new Font("Arial", Font.BOLD, 20));
-        checkoutButton.setBackground(Color.GREEN);
-        checkoutButton.setForeground(Color.WHITE);
-        checkoutButton.setFocusPainted(false);
-        checkoutButton.addActionListener(e -> new Accessories());
+        // Create a panel for both "Back" and "Next" buttons at the top
+        JPanel topPanel = new JPanel(new BorderLayout());
 
-        // Add button to the frame
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(checkoutButton);
-        frame.add(bottomPanel, BorderLayout.SOUTH);
+        // Add the "Back" button on the left
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 20));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.WHITE);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(e -> {
+            // Implement navigation logic for Back button (go back to the previous frame)
+            frame.dispose(); // Close the current frame
+            new WeddingManagementSystem(); // Open the previous screen (or desired frame)
+        });
+        topPanel.add(backButton, BorderLayout.WEST);
+
+        // Add the "Next" button on the right
+        JButton nextButton = new JButton("Next");
+        nextButton.setFont(new Font("Arial", Font.BOLD, 20));
+        nextButton.setBackground(Color.GREEN);
+        nextButton.setForeground(Color.WHITE);
+        nextButton.setFocusPainted(false);
+        nextButton.addActionListener(e -> new Accessories(selectedDresses)); // Navigate to Accessories frame
+        topPanel.add(nextButton, BorderLayout.EAST);
+
+        // Add the panel containing both buttons to the top (NORTH) region of the frame
+        frame.add(topPanel, BorderLayout.NORTH);
 
         // Display the frame
         frame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        DressCatalogW Western = new DressCatalogW();
+        new DressCatalogW();
     }
 }

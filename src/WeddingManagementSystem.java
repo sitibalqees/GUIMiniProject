@@ -127,10 +127,3 @@ public class WeddingManagementSystem extends JFrame {
         WeddingManagementSystem app = new WeddingManagementSystem();
     }
 }
-
-
-
-
-
-
-

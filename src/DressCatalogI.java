@@ -1,10 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class DressCatalogI extends JFrame{
+    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
+
     public DressCatalogI() {
-
-
         JFrame frame = new JFrame("Dress Catalog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(1200, 800); // Larger frame size for better layout
@@ -24,15 +26,15 @@ public class DressCatalogI extends JFrame{
 
         // Example data for dresses (name, price, image path)
         String[][] dressData = {
-                {"Bride And Baraat Cherry Red Fully Embroidered Lavish Lahengga ", "7,331.00", "CherryLahengga.png"},
-                {"Bloom Pink Bridal Lahengga In Raw Silk With Hand Embroidery", "15,525.00", "BloomPinkLahengga.png"},
-                {"Yellow Embroidered Bridal Lahengga and Blouse Set with Mirror Work", "6,026.00", "YellowLahengga.png"},
-                {"Dark Blue Embroidered Gown With Wings", "2,921.00", "DarkBlueGown.png"},
-                {"Poseidon Teal Circular Flared Gown With Fancy Sleeves", "3,101.00", "TealGown.png"},
-                {"Beige Heavy Embroidered Gown With Jacket", "18,896.00", "BeigeGown.png"},
-                {"Beige Paisely Printed Sherwani With Resham Work For Men", "1,121.00", "BeigePaisely.png"},
-                {"Peach Silk Jodhpuri Suit", "1,188.00", "peachSilk.png"},
-                {"Yellow Foil Printed Kurta Jacket Set For Men", "581.00", "YellowKurta.png"}
+                {"Bride And Baraat Cherry Red Fully Embroidered Lavish Lahengga ", "7,331.00", "Dress/CherryLahengga.png"},
+                {"Bloom Pink Bridal Lahengga In Raw Silk With Hand Embroidery", "15,525.00", "Dress/BloomPinkLahengga.png"},
+                {"Yellow Embroidered Bridal Lahengga and Blouse Set with Mirror Work", "6,026.00", "Dress/YellowLahengga.png"},
+                {"Dark Blue Embroidered Gown With Wings", "2,921.00", "Dress/DarkBlueGown.png"},
+                {"Poseidon Teal Circular Flared Gown With Fancy Sleeves", "3,101.00", "Dress/TealGown.png"},
+                {"Beige Heavy Embroidered Gown With Jacket", "18,896.00", "Dress/BeigeGown.png"},
+                {"Beige Paisely Printed Sherwani With Resham Work For Men", "1,121.00", "Dress/BeigePaisely.png"},
+                {"Peach Silk Jodhpuri Suit", "1,188.00", "Dress/peachSilk.png"},
+                {"Yellow Foil Printed Kurta Jacket Set For Men", "581.00", "Dress/YellowKurta.png"}
         };
 
         // Loop to create each item in the grid
@@ -95,6 +97,20 @@ public class DressCatalogI extends JFrame{
             panel.add(dressPrice);
             panel.add(quantityPanel);
 
+            // Store dress data when quantity is greater than 0
+            JButton addButton = new JButton("Add to Cart");
+            addButton.addActionListener(e -> {
+                int quantity = Integer.parseInt(quantityField.getText());
+                if (quantity > 0) {
+                    Dress selectedDress = new Dress(dress[0], dress[1], quantity , dress[2]);
+                    selectedDresses.add(selectedDress);
+                    JOptionPane.showMessageDialog(frame, dress[0] + " added to cart.");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Please select a quantity.");
+                }
+            });
+            panel.add(addButton);
+
             // Add panel to grid
             gridPanel.add(panel);
         }
@@ -102,25 +118,42 @@ public class DressCatalogI extends JFrame{
         // Add grid panel to the center
         frame.add(new JScrollPane(gridPanel), BorderLayout.CENTER);
 
-        // Add a "Checkout" button at the bottom
-        JButton checkoutButton = new JButton("Checkout");
-        checkoutButton.setFont(new Font("Arial", Font.BOLD, 20));
-        checkoutButton.setBackground(Color.GREEN);
-        checkoutButton.setForeground(Color.WHITE);
-        checkoutButton.setFocusPainted(false);
-        checkoutButton.addActionListener(e -> new Accessories());
+        // Create a panel for both "Back" and "Next" buttons at the top
+        JPanel topPanel = new JPanel(new BorderLayout());
 
-        // Add button to the frame
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(checkoutButton);
-        frame.add(bottomPanel, BorderLayout.SOUTH);
+        // Add the "Back" button on the left
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 20));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.WHITE);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(e -> {
+            // Implement navigation logic for Back button (go back to the previous frame)
+            frame.dispose(); // Close the current frame
+            new WeddingManagementSystem(); // Open the previous screen (or desired frame)
+        });
+        topPanel.add(backButton, BorderLayout.WEST);
+
+        // Add the "Next" button on the right
+        JButton nextButton = new JButton("Next");
+        nextButton.setFont(new Font("Arial", Font.BOLD, 20));
+        nextButton.setBackground(Color.GREEN);
+        nextButton.setForeground(Color.WHITE);
+        nextButton.setFocusPainted(false);
+        nextButton.addActionListener(e -> {
+            new Accessories(selectedDresses);
+            this.dispose(); // Close the current frame
+        });
+        topPanel.add(nextButton, BorderLayout.EAST);
+
+        // Add the panel containing both buttons to the top (NORTH) region of the frame
+        frame.add(topPanel, BorderLayout.NORTH);
 
         // Display the frame
         frame.setVisible(true);
     }
 
     public static void main(String[] args) {
-        DressCatalogI Indian = new DressCatalogI();
+        new DressCatalogI();
     }
 }
-

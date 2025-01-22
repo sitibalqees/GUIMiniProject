@@ -2,8 +2,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class DressCatalogM extends JFrame {
+    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
+
     public DressCatalogM() {
         JFrame frame = new JFrame("Dress Catalog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,15 +28,15 @@ public class DressCatalogM extends JFrame {
 
         // Example data for dresses (name, price, image path)
         String[][] dressData = {
-                {"Aishah - Baju Nikah Kurung Riau ", "600.00", "KurungRiau.png"},
-                {"Sabariah - Kebaya Songket Mint Green and Gold", "800.00", "KebayaSongket.png"},
-                {"Bella Diane - Baby Blue Songket Two-Piece", "800.00", "BlueSongket.png"},
-                {"Cempaka - Baju Nikah kurung Riau", "600.00", "Cempaka.png"},
-                {"Pauline - Tulip Dress,Songket Off White and Silver ", "600.00", "Pauline.png"},
-                {"Maharani I - Loose Dress with Detachable Cape,Off White ", "600.00", "Maharani.png"},
-                {"Emelda Sari - Songket Emerald Green and Brown", "800.00", "EmeldaSari.png"},
-                {"Creamy Bali - Cream,Light Brown and Light Grey Songket ", "800.00", "creamyBali.png"},
-                {"Benafe - Songket Royal Blue Silver", "800.00", "Benafe.png"}
+                {"Aishah - Baju Nikah Kurung Riau ", "600.00", "Dress/KurungRiau.png"},
+                {"Sabariah - Kebaya Songket Mint Green and Gold", "800.00", "Dress/KebayaSongket.png"},
+                {"Bella Diane - Baby Blue Songket Two-Piece", "800.00", "Dress/BlueSongket.png"},
+                {"Cempaka - Baju Nikah kurung Riau", "600.00", "Dress/Cempaka.png"},
+                {"Pauline - Tulip Dress,Songket Off White and Silver ", "600.00", "Dress/Pauline.png"},
+                {"Maharani I - Loose Dress with Detachable Cape,Off White ", "600.00", "Dress/Maharani.png"},
+                {"Emelda Sari - Songket Emerald Green and Brown", "800.00", "Dress/EmeldaSari.png"},
+                {"Creamy Bali - Cream,Light Brown and Light Grey Songket ", "800.00", "Dress/creamyBali.png"},
+                {"Benafe - Songket Royal Blue Silver", "800.00", "Dress/Benafe.png"}
         };
 
         // Loop to create each item in the grid
@@ -95,6 +99,20 @@ public class DressCatalogM extends JFrame {
             panel.add(dressPrice);
             panel.add(quantityPanel);
 
+            // Store dress data when quantity is greater than 0
+            JButton addButton = new JButton("Add to Cart");
+            addButton.addActionListener(e -> {
+                int quantity = Integer.parseInt(quantityField.getText());
+                if (quantity > 0) {
+                    Dress selectedDress = new Dress(dress[0], dress[1], quantity,dress[2]);
+                    selectedDresses.add(selectedDress);
+                    JOptionPane.showMessageDialog(frame, dress[0] + " added to cart.");
+                } else {
+                    JOptionPane.showMessageDialog(frame, "Please select a quantity.");
+                }
+            });
+            panel.add(addButton);
+
             // Add panel to grid
             gridPanel.add(panel);
         }
@@ -102,26 +120,45 @@ public class DressCatalogM extends JFrame {
         // Add grid panel to the center
         frame.add(new JScrollPane(gridPanel), BorderLayout.CENTER);
 
-        // Add a "Checkout" button at the bottom
-        JButton checkoutButton = new JButton("Checkout");
-        checkoutButton.setFont(new Font("Arial", Font.BOLD, 20));
-        checkoutButton.setBackground(Color.GREEN);
-        checkoutButton.setForeground(Color.WHITE);
-        checkoutButton.setFocusPainted(false);
-        checkoutButton.addActionListener(e -> new Accessories());
 
-        // Add button to the frame
-        JPanel bottomPanel = new JPanel();
-        bottomPanel.add(checkoutButton);
-        frame.add(bottomPanel, BorderLayout.SOUTH);
+        // Create a panel for both "Back" and "Next" buttons at the top
+        JPanel topPanel = new JPanel(new BorderLayout());
+
+        // Add the "Back" button on the left
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 20));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.WHITE);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(e -> {
+            // Implement navigation logic for Back button (go back to the previous frame)
+            frame.dispose(); // Close the current frame
+            new WeddingManagementSystem(); // Open the previous screen
+        });
+        topPanel.add(backButton, BorderLayout.WEST);
+
+        // Add the "Next" button on the right
+        JButton nextButton = new JButton("Next");
+        nextButton.setFont(new Font("Arial", Font.BOLD, 20));
+        nextButton.setBackground(Color.GREEN);
+        nextButton.setForeground(Color.WHITE);
+        nextButton.setFocusPainted(false);
+        nextButton.addActionListener(e -> {
+            // Pass the selected dresses to the Checkout class
+            new Accessories(selectedDresses);
+            this.dispose();
+        });
+        topPanel.add(nextButton, BorderLayout.EAST);
+
+
+        // Add the panel containing both buttons to the top (NORTH) region of the frame
+        frame.add(topPanel, BorderLayout.NORTH);
 
         // Display the frame
         frame.setVisible(true);
     }
 
-    public static void main (String[] args){
-        DressCatalogM Malay = new DressCatalogM();
+    public static void main(String[] args) {
+        new DressCatalogM();
     }
-
 }
-

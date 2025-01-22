@@ -15,20 +15,49 @@ public class Accessories extends JFrame {
     private ArrayList<Accessory> veilList;
     private ArrayList<Accessory> earingList;
 
-    // Constructor
-    public Accessories() {
+    // List to track selected items
+    private ArrayList<Dress> selectedDresses = new ArrayList<>();
+    private ArrayList<Accessory> selectedAccessories = new ArrayList<>();
+
+    public Accessories(ArrayList<Dress> selectedDresses) {
+        this.selectedDresses = selectedDresses; // Store the selected dresses
+
+        // Constructor
         super.setTitle("ACCESSORIES");
         super.setSize(800, 600); // Adjust size to fit content better
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        // Create a container panel for the title and back button
+        JPanel northPanel = new JPanel(new BorderLayout());
 
         // Title label
         JLabel titleLabel = new JLabel("ACCESSORIES", JLabel.CENTER);
         titleLabel.setFont(new Font("Felix Titling", Font.BOLD, 40));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // Padding for title
-        add(titleLabel, BorderLayout.NORTH);
+        northPanel.add(titleLabel, BorderLayout.CENTER);
+
+        // Add a "Back" button at the top-left corner
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font("Arial", Font.BOLD, 20));
+        backButton.setBackground(Color.GREEN);
+        backButton.setForeground(Color.WHITE);
+        backButton.setFocusPainted(false);
+        backButton.addActionListener(e -> {
+            dispose(); // Close the current frame
+            new WeddingManagementSystem(); // Navigate back
+        });
+
+        // Panel for the back button (aligned to the left)
+        JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        backButtonPanel.add(backButton);
+        northPanel.add(backButtonPanel, BorderLayout.WEST);
+
+        // Add the container panel to the NORTH region
+        add(northPanel, BorderLayout.NORTH);
 
         // Initialize accessory lists
         initializeAccessoryLists();
+
 
         // Prepare the main content panel
         prepareAccessoriesPanel();
@@ -39,69 +68,69 @@ public class Accessories extends JFrame {
     private void initializeAccessoryLists() {
         // Initialize Hairpiece list
         hairpieceList = new ArrayList<>();
-        hairpieceList.add(new Accessory("Tradisional Sanggul Lintang Gandik Set", "250.00", "Gandik.png"));
-        hairpieceList.add(new Accessory("Sanggul Lintang Silver", "80.00", "SanggulLintang.png"));
-        hairpieceList.add(new Accessory("Arabella Crown", "59.00", "ArabellaCown.png"));
-        hairpieceList.add(new Accessory("Alicia Crown", "43.00", "AliciaCrown.png"));
-        hairpieceList.add(new Accessory("Empress Hairpiece", "150.00", "EmpressHairpiece.png"));
-        hairpieceList.add(new Accessory("Traditional Chinese Hairpin Pearl Hair Piece", "298.00", "ChineseHairPiece.png"));
-        hairpieceList.add(new Accessory("Gold Tone Kundan Bridal Passa ", "234.00", "GoldPassa.png"));
-        hairpieceList.add(new Accessory("Kundan And Pearls Passa", "446.00", "PearlPassa.png"));
+        hairpieceList.add(new Accessory("Tradisional Sanggul Lintang Gandik Set", "250.00", "hairpiece/Gandik.png"));
+        hairpieceList.add(new Accessory("Sanggul Lintang Silver", "80.00", "hairpiece/SanggulLintang.png"));
+        hairpieceList.add(new Accessory("Arabella Crown", "59.00", "hairpiece/ArabellaCown.png"));
+        hairpieceList.add(new Accessory("Alicia Crown", "43.00", "hairpiece/AliciaCrown.png"));
+        hairpieceList.add(new Accessory("Empress Hairpiece", "150.00", "hairpiece/EmpressHairpiece.png"));
+        hairpieceList.add(new Accessory("Traditional Chinese Hairpin Pearl Hair Piece", "298.00", "hairpiece/ChineseHairPiece.png"));
+        hairpieceList.add(new Accessory("Gold Tone Kundan Bridal Passa ", "234.00", "hairpiece/GoldPassa.png"));
+        hairpieceList.add(new Accessory("Kundan And Pearls Passa", "446.00", "hairpiece/PearlPassa.png"));
 
 
         // Initialize Necklace list
         necklaceList = new ArrayList<>();
-        necklaceList.add(new Accessory("Ethnic Brooch", "84.00", "Brooch.png"));
-        necklaceList.add(new Accessory("Handmade Rose Gold Brooch", "250.00", "GoldBrooch.png"));
-        necklaceList.add(new Accessory("Ying Yang Necklace", "400.00", "YingYang.png"));
-        necklaceList.add(new Accessory("Thin Jade Necklace", "300.00", "ThinJade.png"));
-        necklaceList.add(new Accessory("White Layered Kundan Necklace", "1500.00", "WhiteNecklace.png"));
-        necklaceList.add(new Accessory("Sterling Silver Necklace", "1500.00", "SilverNecklace.png"));
-        necklaceList.add(new Accessory("Pearl Drop Crystal Rose Gold Necklace", "357.90", "PearlNecklace.png"));
-        necklaceList.add(new Accessory("Rose gold statement backdrop necklace", "550.00", "RoseNecklace.png"));
+        necklaceList.add(new Accessory("Ethnic Brooch", "84.00", "Necklace/Brooch.png"));
+        necklaceList.add(new Accessory("Handmade Rose Gold Brooch", "250.00", "Necklace/GoldBrooch.png"));
+        necklaceList.add(new Accessory("Ying Yang Necklace", "400.00", "Necklace/YingYang.png"));
+        necklaceList.add(new Accessory("Thin Jade Necklace", "300.00", "Necklace/ThinJade.png"));
+        necklaceList.add(new Accessory("White Layered Kundan Necklace", "1500.00", "Necklace/WhiteNecklace.png"));
+        necklaceList.add(new Accessory("Sterling Silver Necklace", "1500.00", "Necklace/SilverNecklace.png"));
+        necklaceList.add(new Accessory("Pearl Drop Crystal Rose Gold Necklace", "357.90", "Necklace/PearlNecklace.png"));
+        necklaceList.add(new Accessory("Rose gold statement backdrop necklace", "550.00", "Necklace/RoseNecklace.png"));
 
 
         // Initialize Shoes list
         shoesList = new ArrayList<>();
-        shoesList.add(new Accessory("Celeste Lace Pumps - Champagne", "259.00", "CelesteHeel.png"));
-        shoesList.add(new Accessory("Anthena Satin Pumps - Silver", "259.00", "SilverHeel.png"));
-        shoesList.add(new Accessory("Rema Lace Pumps", "89.00", "RemaHeel.png"));
-        shoesList.add(new Accessory("Heba Satin Slingback Pumps", "249.00", "HebaHeel.png"));
-        shoesList.add(new Accessory("Punjabi Jutti", "399.25", "Jutti.png"));
-        shoesList.add(new Accessory("Rose Gold Beaded", "304.32", "RoseBeaded.png"));
-        shoesList.add(new Accessory("Daves Black Monk Strap Shoes", "1545.68", "StrapShoes.png"));
-        shoesList.add(new Accessory("Newry Cream Penny Loafers", "1798.03", "PennyLoafers.png"));
-        shoesList.add(new Accessory("Dartmouth Black Loafers", "1212.21", "BlackLoafers.png"));
-        shoesList.add(new Accessory("Black Classic Leather Comfort", "208.15", "LeatherComfort.png"));
+        shoesList.add(new Accessory("Celeste Lace Pumps - Champagne", "259.00", "shoes/CelesteHeel.png"));
+        shoesList.add(new Accessory("Anthena Satin Pumps - Silver", "259.00", "shoes/SilverHeel.png"));
+        shoesList.add(new Accessory("Rema Lace Pumps", "89.00", "shoes/RemaHeel.png"));
+        shoesList.add(new Accessory("Heba Satin Slingback Pumps", "249.00", "shoes/HebaHeel.png"));
+        shoesList.add(new Accessory("Punjabi Jutti", "399.25", "shoes/Jutti.png"));
+        shoesList.add(new Accessory("Rose Gold Beaded", "304.32", "shoes/RoseBeaded.png"));
+        shoesList.add(new Accessory("Daves Black Monk Strap Shoes", "1545.68", "shoes/StrapShoes.png"));
+        shoesList.add(new Accessory("Newry Cream Penny Loafers", "1798.03", "shoes/PennyLoafers.png"));
+        shoesList.add(new Accessory("Dartmouth Black Loafers", "1212.21", "shoes/BlackLoafers.png"));
+        shoesList.add(new Accessory("Black Classic Leather Comfort", "208.15", "shoes/LeatherComfort.png"));
 
         // Initialize Bracelet list
         braceletList = new ArrayList<>();
-        braceletList.add(new Accessory("Classic Gold Bracelet", "89.00", "ClassicGold.png"));
-        braceletList.add(new Accessory("Classic Silver Bracelet", "89.00", "ClassicSilver.png"));
-        braceletList.add(new Accessory("Dragon and Phoenix Bangels", "3000.00", "PheonixBangels.png"));
-        braceletList.add(new Accessory("Fortune Bangle", "183.00", "FortuneBangle.png"));
-        braceletList.add(new Accessory("Luxury Lucie Bangle stack - Maroon Multishade", "488.30", "LuxuryBangle.png"));
-        braceletList.add(new Accessory("Roshni Luxury Bangle Set - Silver & Pink", "493.80", "RoshniBangle.png"));
-        braceletList.add(new Accessory("Long Slider Bracelet", "788.60", "SliderBracelet.png"));
-        braceletList.add(new Accessory("Leaves and Branches Rose Gold bracelet", "131.00", "LeavesBracelet.png"));
+        braceletList.add(new Accessory("Classic Gold Bracelet", "89.00", "bracelet/ClassicGold.png"));
+        braceletList.add(new Accessory("Classic Silver Bracelet", "89.00", "bracelet/ClassicSilver.png"));
+        braceletList.add(new Accessory("Dragon and Phoenix Bangels", "3000.00", "bracelet/PheonixBangels.png"));
+        braceletList.add(new Accessory("Fortune Bangle", "183.00", "bracelet/FortuneBangle.png"));
+        braceletList.add(new Accessory("Luxury Lucie Bangle stack - Maroon Multishade", "488.30", "bracelet/LuxuryBangle.png"));
+        braceletList.add(new Accessory("Roshni Luxury Bangle Set - Silver & Pink", "493.80", "bracelet/RoshniBangle.png"));
+        braceletList.add(new Accessory("Long Slider Bracelet", "788.60", "bracelet/SliderBracelet.png"));
+        braceletList.add(new Accessory("Leaves and Branches Rose Gold bracelet", "131.00", "bracelet/LeavesBracelet.png"));
 
         // Initialize Veil list
         veilList = new ArrayList<>();
-        veilList.add(new Accessory("Juliet Veil", "69.00", "JulietVeil.png"));
-        veilList.add(new Accessory("Hanna Veil", "69.00", "HannaVeil.png"));
-        veilList.add(new Accessory("Whimsical Metalic Floral Veil", "70.00", "FloralVeil.png"));
-        veilList.add(new Accessory("Demure Lace Applique Veil", "59.00", "DemureVeil.png"));
-        veilList.add(new Accessory("Yurra Veil", "69.00", "YurraVeil.png"));
-        veilList.add(new Accessory("Chix Plain Short Veil", "69.00", "ShortVeil.png"));
+        veilList.add(new Accessory("Juliet Veil", "69.00", "veil/JulietVeil.png"));
+        veilList.add(new Accessory("Hanna Veil", "69.00", "veil/HannaVeil.png"));
+        veilList.add(new Accessory("Whimsical Metalic Floral Veil", "70.00", "veil/FloralVeil.png"));
+        veilList.add(new Accessory("Demure Lace Applique Veil", "59.00", "veil/DemureVeil.png"));
+        veilList.add(new Accessory("Yurra Veil", "69.00", "veil/YurraVeil.png"));
+        veilList.add(new Accessory("Chix Plain Short Veil", "69.00", "veil/ShortVeil.png"));
 
         // Initialize Earing list
         earingList = new ArrayList<>();
-        earingList.add(new Accessory("Pearl Drop Earrings", "116.70", "PearlEar.png"));
-        earingList.add(new Accessory("Rosa Hoop Earrings", "273.00", "RosaEAr.png"));
-        earingList.add(new Accessory("Pearl Earrings", "169.90", "PearlIndianEar.png"));
-        earingList.add(new Accessory("Amreen Jhumka Earrings", "246.90", "AmreenEar.png"));
-        earingList.add(new Accessory("Pearl Ball Earings ", "58.50", "BallEar.png"));
-        earingList.add(new Accessory("Floral Jade Earrings", "126.20", "JadeEar.png"));
+        earingList.add(new Accessory("Pearl Drop Earrings", "116.70", "earing/PearlEar.png"));
+        earingList.add(new Accessory("Rosa Hoop Earrings", "273.00", "earing/RosaEAr.png"));
+        earingList.add(new Accessory("Pearl Earrings", "169.90", "earing/PearlIndianEar.png"));
+        earingList.add(new Accessory("Amreen Jhumka Earrings", "246.90", "earing/AmreenEar.png"));
+        earingList.add(new Accessory("Pearl Ball Earings ", "58.50", "earing/BallEar.png"));
+        earingList.add(new Accessory("Floral Jade Earrings", "126.20", "earing/JadeEar.png"));
     }
 
     private void prepareAccessoriesPanel() {
@@ -141,6 +170,22 @@ public class Accessories extends JFrame {
 
         // Add the details panel to the center of the frame
         add(new JScrollPane(detailsPanel), BorderLayout.CENTER);
+
+        // Add a "Checkout" button at the bottom
+        JButton checkoutButton = new JButton("Checkout");
+        checkoutButton.setFont(new Font("Arial", Font.BOLD, 20));
+        checkoutButton.setBackground(Color.GREEN);
+        checkoutButton.setForeground(Color.WHITE);
+        checkoutButton.setFocusPainted(false);
+        checkoutButton.addActionListener(e -> handleCheckout());
+
+
+        // Add button to the frame
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.add(checkoutButton);
+        super.add(bottomPanel, BorderLayout.SOUTH);
+
+
     }
 
     // Method to show the details of the selected accessory
@@ -148,12 +193,11 @@ public class Accessories extends JFrame {
         // Clear previous details
         detailsPanel.removeAll();
 
-        // Create a ButtonGroup for radio buttons
-        ButtonGroup buttonGroup = new ButtonGroup();
 
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(10, 10, 10, 10); // Spacing between items
         gbc.fill = GridBagConstraints.BOTH;
+
 
         int row = 0, col = 0;
         for (Accessory accessory : accessoryList) {
@@ -161,7 +205,7 @@ public class Accessories extends JFrame {
             JPanel itemPanel = new JPanel();
             itemPanel.setLayout(new BoxLayout(itemPanel, BoxLayout.Y_AXIS));
             itemPanel.setBorder(BorderFactory.createLineBorder(Color.LIGHT_GRAY));
-            itemPanel.setPreferredSize(new Dimension(400, 250));
+            itemPanel.setPreferredSize(new Dimension(500, 300));
 
             // Accessory image
             JLabel accessoryImage;
@@ -191,8 +235,18 @@ public class Accessories extends JFrame {
 
             // Radio button
             JRadioButton radioButton = new JRadioButton("Select");
+            radioButton.setActionCommand(accessory.getName()); // Set the name as the action command
             radioButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-            buttonGroup.add(radioButton);
+
+            // Add an action listener to track selections
+            radioButton.addActionListener(e -> {
+                if (radioButton.isSelected()) {
+                    selectedAccessories.add(accessory);
+                } else {
+                    selectedAccessories.remove(accessory);
+                }
+            });
+
 
             // Add components to the item panel
             itemPanel.add(Box.createVerticalGlue());
@@ -215,13 +269,31 @@ public class Accessories extends JFrame {
             }
         }
 
+
         // Refresh the details panel
         detailsPanel.revalidate();
         detailsPanel.repaint();
+        
+    }
+
+    private void handleCheckout() {
+        if (!selectedAccessories.isEmpty()) {
+            StringBuilder message = new StringBuilder("Selected items:\n");
+            for (Accessory accessory : selectedAccessories) {
+                message.append("- ").append(accessory.getName()).append("\n");
+            }
+            JOptionPane.showMessageDialog(this, message.toString());
+            // Pass selected items to the Checkout class or handle it here
+            new Checkout(selectedDresses, selectedAccessories); // Replace with actual checkout logic
+        } else {
+            JOptionPane.showMessageDialog(this, "No items selected!", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
     }
 
     // Main method to display the frame
-    public static void main(String[] args) {
-        new Accessories();
+    public static void main(String[] args)
+    {
+        ArrayList<Dress> selectedDress = new ArrayList<>();
+        new Accessories(selectedDress);
     }
 }

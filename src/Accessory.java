@@ -22,4 +22,11 @@ public class Accessory {
     public String getImagePath() {
         return imagePath;
     }
+
+    // Override toString method for displaying accessory details in the checkout window
+    @Override
+    public String toString() {
+        return name + " - " + price;
+    }
+
 }
