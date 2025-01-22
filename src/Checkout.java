@@ -14,12 +14,14 @@ public class Checkout {
 
         // Create the main frame
         JFrame checkoutFrame = new JFrame("Checkout");
-        checkoutFrame.setSize(800, 600); // Adjusted for a better layout
+        checkoutFrame.setSize(1600, 800); // Adjusted for a better layout
+        checkoutFrame.setBackground(new Color(255, 229, 204)); //beige background
         checkoutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Left-hand side: Customer Information
         JPanel customerInfoPanel = new JPanel();
         customerInfoPanel.setLayout(new BoxLayout(customerInfoPanel, BoxLayout.Y_AXIS));
+        customerInfoPanel.setBackground(new Color(255, 229, 204)); //beige color
 
         customerInfoPanel.add(new JLabel("Customer Information"));
         customerInfoPanel.add(Box.createVerticalStrut(10)); // Add spacing
@@ -80,6 +82,7 @@ public class Checkout {
         itemsPanel.add(new JLabel("Selected Dresses and Accessories"));
         itemsPanel.setFont(new Font("Felix Titling", Font.BOLD, 25));
         itemsPanel.add(Box.createVerticalStrut(10)); // Add spacing
+        itemsPanel.setBackground(new Color(255, 229, 204)); //beige color
         Font itemFont = new Font("Serif", Font.PLAIN, 20);
 
         // Add Dresses
@@ -148,6 +151,7 @@ public class Checkout {
         buttonPanel.add(backButton);
         buttonPanel.add(previewButton);
         checkoutFrame.add(buttonPanel, BorderLayout.SOUTH);
+        checkoutFrame.setBackground(new Color(255, 229, 204)); //beige color
 
         // Add the split pane to the frame
         checkoutFrame.add(splitPane);
