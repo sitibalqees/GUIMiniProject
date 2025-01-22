@@ -24,8 +24,11 @@ public class Accessories extends JFrame {
 
         // Constructor
         super.setTitle("ACCESSORIES");
-        super.setSize(800, 600); // Adjust size to fit content better
+        super.setSize(1600, 800);
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        //Set the background color 
+        getContentPane().setBackground(new Color(255, 229, 204)); //beige color
 
         // Create a container panel for the title and back button
         JPanel northPanel = new JPanel(new BorderLayout());
@@ -39,11 +42,12 @@ public class Accessories extends JFrame {
         titleLabel.setFont(new Font("Felix Titling", Font.BOLD, 40));
         titleLabel.setBorder(BorderFactory.createEmptyBorder(20, 0, 20, 0)); // Padding for title
         northPanel.add(titleLabel, BorderLayout.CENTER);
+        northPanel.setBackground(new Color(255, 229, 204)); //beige color
 
         // Add a "Back" button at the top-left corner
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Arial", Font.BOLD, 20));
-        backButton.setBackground(Color.GREEN);
+        backButton.setBackground(new Color(255, 128, 0));
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
         backButton.addActionListener(e -> {
@@ -53,6 +57,7 @@ public class Accessories extends JFrame {
 
         // Panel for the back button (aligned to the left)
         JPanel backButtonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        backButtonPanel.setBackground(new Color(255, 229, 204)); //beige background
         backButtonPanel.add(backButton);
         northPanel.add(backButtonPanel, BorderLayout.WEST);
 
@@ -141,6 +146,7 @@ public class Accessories extends JFrame {
         // Panel for buttons to select accessories
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new GridLayout(3, 2, 20, 20));
+        buttonPanel.setBackground(new Color(255, 229, 204)); //beige background
 
         btnHairpiece = new JButton("Hairpiece");
         btnNecklace = new JButton("Necklace");
@@ -150,11 +156,17 @@ public class Accessories extends JFrame {
         btnEaring = new JButton("Earing");
 
         buttonPanel.add(btnHairpiece);
+        btnHairpiece.setBackground(new Color(255, 128, 0));
         buttonPanel.add(btnNecklace);
+        btnNecklace.setBackground(new Color(255, 128, 0));
         buttonPanel.add(btnShoes);
+        btnShoes.setBackground(new Color(255, 128, 0));
         buttonPanel.add(btnBracelet);
+        btnBracelet.setBackground(new Color(255, 128, 0));
         buttonPanel.add(btnVeil);
+        btnVeil.setBackground(new Color(255, 128, 0));
         buttonPanel.add(btnEaring);
+        btnEaring.setBackground(new Color(255, 128, 0));
 
         // Add action listeners for buttons
         btnHairpiece.addActionListener(e -> showAccessoryDetails(hairpieceList));
@@ -170,6 +182,7 @@ public class Accessories extends JFrame {
         // Panel to show the details of the selected accessory
         detailsPanel = new JPanel();
         detailsPanel.setLayout(new GridBagLayout()); // Change layout to GridBagLayout for better control
+        detailsPanel.setBackground(new Color(255, 229, 204)); //beige background
         detailsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Add the details panel to the center of the frame
@@ -178,7 +191,7 @@ public class Accessories extends JFrame {
         // Add a "Checkout" button at the bottom
         JButton checkoutButton = new JButton("Checkout");
         checkoutButton.setFont(new Font("Arial", Font.BOLD, 20));
-        checkoutButton.setBackground(Color.GREEN);
+        checkoutButton.setBackground(new Color(255, 128, 0));
         checkoutButton.setForeground(Color.WHITE);
         checkoutButton.setFocusPainted(false);
         checkoutButton.addActionListener(e -> handleCheckout());
@@ -188,6 +201,7 @@ public class Accessories extends JFrame {
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(checkoutButton);
         super.add(bottomPanel, BorderLayout.SOUTH);
+        bottomPanel.setBackground(new Color(255, 229, 204)); //beige color
 
 
     }
@@ -277,7 +291,7 @@ public class Accessories extends JFrame {
         // Refresh the details panel
         detailsPanel.revalidate();
         detailsPanel.repaint();
-        
+
     }
 
     private void handleCheckout() {

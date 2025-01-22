@@ -1,101 +1,118 @@
 import javax.swing.*;
-import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
 
 public class Receipt {
-    public Receipt(List<Dress> selectedDresses, List<Accessory> selectedAccessories) {
-        // Create a new frame for the receipt preview
+    public Receipt(List<Dress> selectedDresses, List<Accessory> selectedAccessories, String customerName, String email, String phone) {
+        // Create the frame
         JFrame receiptFrame = new JFrame("Receipt Preview");
-        receiptFrame.setSize(800, 600);
+        receiptFrame.setSize(1600, 800);
         receiptFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-        // Panel to display the receipt
-        JPanel receiptPanel = new JPanel();
-        receiptPanel.setLayout(new BoxLayout(receiptPanel, BoxLayout.Y_AXIS));
-        receiptPanel.setBackground(Color.WHITE);
 
         // Make the frame full screen
         receiptFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
         receiptFrame.setUndecorated(false);
 
-        // Add a title section
-        JLabel titleLabel = new JLabel("Boutique Receipt", SwingConstants.CENTER);
-        titleLabel.setFont(new Font("Serif", Font.BOLD, 30));
-        titleLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 10, 0));
-        titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        receiptPanel.add(titleLabel);
+        // Main panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(10, 10));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.setBackground(new Color(255, 229, 204));
 
-        // Separator line
-        JSeparator separator = new JSeparator();
-        separator.setForeground(Color.LIGHT_GRAY);
-        receiptPanel.add(separator);
+        // Top panel for customer information and "Home" button
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(new Color(255, 229, 204));
 
-        // Display all selected dresses and accessories
-        double totalPrice = 0;
+        // Customer information panel
+        JPanel customerInfoPanel = new JPanel();
+        customerInfoPanel.setLayout(new GridLayout(4, 2, 5, 5));
+        customerInfoPanel.setBackground(new Color(255, 229, 204));
 
-        // Add dresses section
-        JLabel dressesLabel = new JLabel("Dresses:");
-        dressesLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
-        dressesLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 5, 0));
-        receiptPanel.add(dressesLabel);
+        customerInfoPanel.add(new JLabel("Name:"));
+        customerInfoPanel.add(new JLabel(customerName));
+        customerInfoPanel.add(new JLabel("Email:"));
+        customerInfoPanel.add(new JLabel(email));
+        customerInfoPanel.add(new JLabel("Phone Number:"));
+        customerInfoPanel.add(new JLabel(phone));
+        customerInfoPanel.add(new JLabel("Date:"));
+        customerInfoPanel.add(new JLabel(java.time.LocalDate.now().toString()));
 
-        for (Dress dress : selectedDresses) {
-            JLabel dressLabel = new JLabel(dress.getName() + " - RM " + dress.getPrice());
-            dressLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
-            receiptPanel.add(dressLabel);
-            totalPrice += Double.parseDouble(dress.getPrice());
-        }
+        topPanel.add(customerInfoPanel, BorderLayout.CENTER);
 
-        // Add accessories section
-        JLabel accessoriesLabel = new JLabel("Accessories:");
-        accessoriesLabel.setFont(new Font("SansSerif", Font.BOLD, 25));
-        accessoriesLabel.setBorder(BorderFactory.createEmptyBorder(10, 0, 5, 0));
-        receiptPanel.add(accessoriesLabel);
+        // "Home" button
+        JButton homeButton = new JButton("Home");
+        homeButton.setFont(new Font("Arial", Font.BOLD, 14));
+        homeButton.setBackground(new Color(255, 204, 153));
+        homeButton.setFocusPainted(false);
 
-        for (Accessory accessory : selectedAccessories) {
-            JLabel accessoryLabel = new JLabel(accessory.getName() + " - RM " + accessory.getPrice());
-            accessoryLabel.setFont(new Font("SansSerif", Font.PLAIN, 25));
-            receiptPanel.add(accessoryLabel);
-            totalPrice += Double.parseDouble(accessory.getPrice());
-        }
-
-        // Add a total price section
-        receiptPanel.add(Box.createVerticalStrut(10));
-        JLabel totalPriceLabel = new JLabel("Total Price: RM " + String.format("%.2f", totalPrice));
-        totalPriceLabel.setFont(new Font("Serif", Font.BOLD, 28));
-        totalPriceLabel.setForeground(Color.BLACK);
-        totalPriceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        receiptPanel.add(totalPriceLabel);
-
-        // Add a home button
-        JButton backButton = new JButton("Home");
-        backButton.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        backButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        backButton.addActionListener(new ActionListener() {
+        // Action listener for the "Home" button
+        homeButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 receiptFrame.dispose();
-                new WeddingManagementSystem(); // Open the home frame
+                new WeddingManagementSystem();
+                JOptionPane.showMessageDialog(null, "Returning to Home...");
             }
         });
-        receiptPanel.add(Box.createVerticalStrut(20));
-        receiptPanel.add(backButton);
 
-        // Add padding and border
-        receiptPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createEmptyBorder(20, 20, 20, 20),
-                new LineBorder(Color.LIGHT_GRAY, 1, true))
-        );
+        // Panel to hold the button, aligned to the top-right
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setBackground(new Color(255, 229, 204));
+        buttonPanel.add(homeButton);
+        topPanel.add(buttonPanel, BorderLayout.EAST);
 
-        // Wrap the receipt panel in a scroll pane
-        JScrollPane scrollPane = new JScrollPane(receiptPanel);
-        scrollPane.setBorder(null);
-        receiptFrame.add(scrollPane);
+        mainPanel.add(topPanel, BorderLayout.NORTH);
 
-        // Make the frame visible
+        // Table for items
+        String[] columns = {"No", "Item Name", "Quantity", "Price", "Total"};
+        DefaultTableModel tableModel = new DefaultTableModel(columns, 0);
+        JTable itemsTable = new JTable(tableModel);
+        itemsTable.setFillsViewportHeight(true);
+        itemsTable.setRowHeight(25);
+
+        // Add items to the table
+        int index = 1;
+        double subtotal = 0.0;
+        for (Dress dress : selectedDresses) {
+            double price = Double.parseDouble(dress.getPrice());
+            tableModel.addRow(new Object[]{index++, dress.getName(), 1, price, price});
+            subtotal += price;
+        }
+        for (Accessory accessory : selectedAccessories) {
+            double price = Double.parseDouble(accessory.getPrice());
+            tableModel.addRow(new Object[]{index++, accessory.getName(), 1, price, price});
+            subtotal += price;
+        }
+
+        JScrollPane tableScrollPane = new JScrollPane(itemsTable);
+        mainPanel.add(tableScrollPane, BorderLayout.CENTER);
+
+        // Summary panel
+        JPanel summaryPanel = new JPanel();
+        summaryPanel.setLayout(new GridLayout(4, 2, 5, 5));
+        summaryPanel.setBackground(new Color(255, 229, 204));
+
+        double taxRate = 5; // 5% tax
+        double tax = subtotal * taxRate / 100;
+        double total = subtotal + tax;
+
+        summaryPanel.add(new JLabel("Subtotal:"));
+        summaryPanel.add(new JLabel(String.format("RM %.2f", subtotal)));
+        summaryPanel.add(new JLabel("Tax (5%):"));
+        summaryPanel.add(new JLabel(String.format("RM %.2f", tax)));
+        summaryPanel.add(new JLabel("Total:"));
+        summaryPanel.add(new JLabel(String.format("RM %.2f", total)));
+
+        mainPanel.add(summaryPanel, BorderLayout.SOUTH);
+
+        // Add main panel to the frame
+        receiptFrame.add(mainPanel);
+
+        // Set frame visibility
         receiptFrame.setVisible(true);
     }
 }

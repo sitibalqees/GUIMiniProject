@@ -9,14 +9,14 @@ public class DressCatalogI extends JFrame{
     public DressCatalogI() {
         JFrame frame = new JFrame("Dress Catalog");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(800, 600); // Larger frame size for better layout
+        frame.setSize(1600, 800);
 
         // Main frame layout
         frame.setLayout(new BorderLayout());
 
         // Make the frame full screen
-        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
-        setUndecorated(false);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        frame.setUndecorated(false);
 
         // Add a title at the top
         JLabel titleLabel = new JLabel("Dress Catalog", JLabel.CENTER);
@@ -27,6 +27,7 @@ public class DressCatalogI extends JFrame{
         // Panel for dresses with flexible layout
         JPanel gridPanel = new JPanel(new GridLayout(3, 3, 20, 20));
         gridPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        gridPanel.setBackground(new Color(255, 229, 204)); // Beige background
 
         // Example data for dresses (name, price, image path)
         String[][] dressData = {
@@ -74,7 +75,9 @@ public class DressCatalogI extends JFrame{
             // Quantity panel with increment/decrement buttons
             JPanel quantityPanel = new JPanel();
             JButton decrementButton = new JButton("-");
+            decrementButton.setBackground(new Color(255,128,0));
             JButton incrementButton = new JButton("+");
+            incrementButton.setBackground(new Color(255,128,0));
             JTextField quantityField = new JTextField("0", 3);
             quantityField.setHorizontalAlignment(JTextField.CENTER);
 
@@ -103,6 +106,7 @@ public class DressCatalogI extends JFrame{
 
             // Store dress data when quantity is greater than 0
             JButton addButton = new JButton("Add to Cart");
+            addButton.setBackground(new Color(255,128,0));
             addButton.addActionListener(e -> {
                 int quantity = Integer.parseInt(quantityField.getText());
                 if (quantity > 0) {
@@ -128,7 +132,7 @@ public class DressCatalogI extends JFrame{
         // Add the "Back" button on the left
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Arial", Font.BOLD, 20));
-        backButton.setBackground(Color.GREEN);
+        backButton.setBackground(new Color(255,128,0));
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
         backButton.addActionListener(e -> {
@@ -137,11 +141,12 @@ public class DressCatalogI extends JFrame{
             new WeddingManagementSystem(); // Open the previous screen (or desired frame)
         });
         topPanel.add(backButton, BorderLayout.WEST);
+        topPanel.setBackground(new Color(255, 229, 204)); // Beige background
 
         // Add the "Next" button on the right
         JButton nextButton = new JButton("Next");
         nextButton.setFont(new Font("Arial", Font.BOLD, 20));
-        nextButton.setBackground(Color.GREEN);
+        nextButton.setBackground(new Color(255,128,0));
         nextButton.setForeground(Color.WHITE);
         nextButton.setFocusPainted(false);
         nextButton.addActionListener(e -> {

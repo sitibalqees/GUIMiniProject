@@ -1,8 +1,3 @@
-First Name: dfdbsd
-Last Name: gfg
-Email: dsfs
-Phone: fsdf
-Address: dssf
-City: dffsf
-State: dsfsffs
-ZIP Code: 212
+FirstName		LastName		Email			PhoneNo		Address		City		State		ZipCode
+========================================================================================================
+misha		Azim				017-6589452								

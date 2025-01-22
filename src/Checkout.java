@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Checkout {
@@ -14,12 +13,18 @@ public class Checkout {
 
         // Create the main frame
         JFrame checkoutFrame = new JFrame("Checkout");
-        checkoutFrame.setSize(800, 600); // Adjusted for a better layout
+        checkoutFrame.setSize(1600, 800); // Adjusted for a better layout
+        checkoutFrame.setBackground(new Color(255, 229, 204)); // Beige background
         checkoutFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Left-hand side: Customer Information
+        // Make the frame full screen
+        checkoutFrame.setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        checkoutFrame.setUndecorated(false);
+
+        // Customer Information
         JPanel customerInfoPanel = new JPanel();
         customerInfoPanel.setLayout(new BoxLayout(customerInfoPanel, BoxLayout.Y_AXIS));
+        customerInfoPanel.setBackground(new Color(255, 229, 204)); // Beige background
 
         customerInfoPanel.add(new JLabel("Customer Information"));
         customerInfoPanel.add(Box.createVerticalStrut(10)); // Add spacing
@@ -54,16 +59,15 @@ public class Checkout {
         // Save Button
         JButton saveButton = new JButton("Save Information");
         saveButton.addActionListener(e -> {
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter("customer_info.txt"))) {
-                writer.write("First Name: " + firstNameField.getText() + "\n");
-                writer.write("Last Name: " + lastNameField.getText() + "\n");
-                writer.write("Email: " + emailField.getText() + "\n");
-                writer.write("Phone: " + phoneField.getText() + "\n");
-                writer.write("Address: " + addressField.getText() + "\n");
-                writer.write("City: " + cityField.getText() + "\n");
-                writer.write("State: " + stateField.getText() + "\n");
-                writer.write("ZIP Code: " + zipField.getText() + "\n");
-                writer.write("========================================================================================");
+            try (BufferedWriter bw = new BufferedWriter(new FileWriter("customer_info.txt"))) {
+                bw.write("FirstName\t\tLastName\t\tEmail\t\t\tPhoneNo\t\tAddress\t\tCity\t\tState\t\tZipCode");
+                bw.newLine();
+                bw.write("========================================================================================================\n");
+                bw.write( firstNameField.getText()+"\t\t" +lastNameField.getText()
+                        +"\t\t" +emailField.getText()+"\t\t" +phoneField.getText()
+                        +"\t\t" +addressField.getText()+"\t\t" +cityField.getText()+"\t\t"
+                        +stateField.getText()+"\t\t" +zipField.getText() +"\n" );
+
                 JOptionPane.showMessageDialog(checkoutFrame, "Customer information saved successfully!");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(checkoutFrame, "Error saving information: " + ex.getMessage());
@@ -74,13 +78,14 @@ public class Checkout {
         // Add padding
         customerInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Selected Dresses and Accessories
+       //Selected Dresses and Accessories
         JPanel itemsPanel = new JPanel();
         itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
         itemsPanel.add(new JLabel("Selected Dresses and Accessories"));
-        itemsPanel.setFont(new Font("Felix Titling", Font.BOLD, 25));
         itemsPanel.add(Box.createVerticalStrut(10)); // Add spacing
-        Font itemFont = new Font("Serif", Font.PLAIN, 20);
+        itemsPanel.setBackground(new Color(255, 229, 204)); // Beige background
+
+        Font itemFont = new Font("Arial", Font.PLAIN, 14);
 
         // Add Dresses
         for (Dress dress : selectedDresses) {
@@ -124,30 +129,24 @@ public class Checkout {
         // Split the layout into two panels
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, customerInfoPanel, new JScrollPane(itemsPanel));
         splitPane.setDividerLocation(400); // Set the divider position
+        splitPane.setBackground(new Color(255, 229, 204)); // Beige background
+
 
         // Create a button to preview the receipt
         JButton previewButton = new JButton("Preview Receipt");
         previewButton.addActionListener(e -> {
-            new Receipt(selectedDresses, selectedAccessories);
+            String customerName = firstNameField.getText() + " " + lastNameField.getText();
+            String email = emailField.getText();
+            String phone = phoneField.getText();
+            // Pass the selected dresses and accessories to the Receipt class
+            new Receipt(selectedDresses, selectedAccessories,customerName, email, phone);
         });
 
         // Add the preview button to the frame
-        JPanel buttonPreview = new JPanel();
-        buttonPreview.add(previewButton);
-        checkoutFrame.add(buttonPreview, BorderLayout.SOUTH);
-
-        // Create a Back Button
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> {
-            checkoutFrame.dispose(); // Close the Checkout frame
-            new Accessories((ArrayList<Dress>) selectedDresses); // Open the Accessories frame
-        });
-
-        // Add buttons to the frame
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(backButton);
         buttonPanel.add(previewButton);
         checkoutFrame.add(buttonPanel, BorderLayout.SOUTH);
+        checkoutFrame.setBackground(new Color(255, 229, 204)); // Beige background
 
         // Add the split pane to the frame
         checkoutFrame.add(splitPane);

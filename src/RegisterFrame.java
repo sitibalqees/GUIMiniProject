@@ -19,6 +19,10 @@ public class RegisterFrame extends JFrame implements ActionListener {
         super.setTitle("Register");
         super.setSize(1600, 800);
 
+        // Make the frame full screen
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize to full screen
+        setUndecorated(false);
+
         // Set beige background for the entire frame
         super.getContentPane().setBackground(new Color(255,229,204)); // Beige color
 
