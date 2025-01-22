@@ -28,7 +28,7 @@ public class Accessories extends JFrame {
         super.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         //Set the background color 
-        JFrame getContentPane().setBackground(new Color(255, 229, 204)); //beige color
+        getContentPane().setBackground(new Color(255, 229, 204)); //beige color
 
         // Create a container panel for the title and back button
         JPanel northPanel = new JPanel(new BorderLayout());
