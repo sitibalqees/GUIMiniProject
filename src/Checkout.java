@@ -1,7 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
 import java.io.*;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Checkout {
@@ -20,6 +19,7 @@ public class Checkout {
         // Left-hand side: Customer Information
         JPanel customerInfoPanel = new JPanel();
         customerInfoPanel.setLayout(new BoxLayout(customerInfoPanel, BoxLayout.Y_AXIS));
+        customerInfoPanel.setBackground(new Color(255, 229, 204)); // Beige background
 
         customerInfoPanel.add(new JLabel("Customer Information"));
         customerInfoPanel.add(Box.createVerticalStrut(10)); // Add spacing
@@ -63,7 +63,6 @@ public class Checkout {
                 writer.write("City: " + cityField.getText() + "\n");
                 writer.write("State: " + stateField.getText() + "\n");
                 writer.write("ZIP Code: " + zipField.getText() + "\n");
-                writer.write("========================================================================================");
                 JOptionPane.showMessageDialog(checkoutFrame, "Customer information saved successfully!");
             } catch (IOException ex) {
                 JOptionPane.showMessageDialog(checkoutFrame, "Error saving information: " + ex.getMessage());
@@ -74,18 +73,20 @@ public class Checkout {
         // Add padding
         customerInfoPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        // Selected Dresses and Accessories
+        // Right-hand side: Selected Dresses and Accessories
         JPanel itemsPanel = new JPanel();
         itemsPanel.setLayout(new BoxLayout(itemsPanel, BoxLayout.Y_AXIS));
         itemsPanel.add(new JLabel("Selected Dresses and Accessories"));
-        itemsPanel.setFont(new Font("Felix Titling", Font.BOLD, 25));
         itemsPanel.add(Box.createVerticalStrut(10)); // Add spacing
-        Font itemFont = new Font("Serif", Font.PLAIN, 20);
+        itemsPanel.setBackground(new Color(255, 229, 204)); // Beige background
+
+        Font itemFont = new Font("Arial", Font.PLAIN, 14);
 
         // Add Dresses
         for (Dress dress : selectedDresses) {
             JPanel dressPanel = new JPanel();
             dressPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+            dressPanel.setBackground(new Color(255, 229, 204)); // Beige background
             JLabel dressLabel = new JLabel(dress.getName() + " - RM " + dress.getPrice());
             dressLabel.setFont(itemFont);
             dressPanel.add(dressLabel);
@@ -128,26 +129,18 @@ public class Checkout {
         // Create a button to preview the receipt
         JButton previewButton = new JButton("Preview Receipt");
         previewButton.addActionListener(e -> {
-            new Receipt(selectedDresses, selectedAccessories);
+            String customerName = firstNameField.getText() + " " + lastNameField.getText();
+            String email = emailField.getText();
+            String phone = phoneField.getText();
+            // Pass the selected dresses and accessories to the Receipt class
+            new Receipt(selectedDresses, selectedAccessories,customerName, email, phone);
         });
 
         // Add the preview button to the frame
-        JPanel buttonPreview = new JPanel();
-        buttonPreview.add(previewButton);
-        checkoutFrame.add(buttonPreview, BorderLayout.SOUTH);
-
-        // Create a Back Button
-        JButton backButton = new JButton("Back");
-        backButton.addActionListener(e -> {
-            checkoutFrame.dispose(); // Close the Checkout frame
-            new Accessories((ArrayList<Dress>) selectedDresses); // Open the Accessories frame
-        });
-
-        // Add buttons to the frame
         JPanel buttonPanel = new JPanel();
-        buttonPanel.add(backButton);
         buttonPanel.add(previewButton);
         checkoutFrame.add(buttonPanel, BorderLayout.SOUTH);
+        checkoutFrame.setBackground(new Color(255, 229, 204)); // Beige background
 
         // Add the split pane to the frame
         checkoutFrame.add(splitPane);
