@@ -47,7 +47,7 @@ public class Accessories extends JFrame {
         // Add a "Back" button at the top-left corner
         JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Arial", Font.BOLD, 20));
-       backButton.setBackground(new Color (255,128,0));
+        backButton.setBackground(new Color (255,128,0));
         backButton.setForeground(Color.WHITE);
         backButton.setFocusPainted(false);
         backButton.addActionListener(e -> {
@@ -155,11 +155,17 @@ public class Accessories extends JFrame {
         btnEaring = new JButton("Earing");
 
         buttonPanel.add(btnHairpiece);
+        btnHairpiece.setBackground(new Color(255,128,0));
         buttonPanel.add(btnNecklace);
+        btnNecklace.setBackground(new Color(255,128,0));
         buttonPanel.add(btnShoes);
+        btnShoes.setBackground(new Color(255,128,0));
         buttonPanel.add(btnBracelet);
+        btnBracelet.setBackground(new Color(255,128,0));
         buttonPanel.add(btnVeil);
+        btnVeil.setBackground(new Color(255,128,0));
         buttonPanel.add(btnEaring);
+        btnEaring.setBackground(new Color(255,128,0));
 
         // Add action listeners for buttons
         btnHairpiece.addActionListener(e -> showAccessoryDetails(hairpieceList));
@@ -171,6 +177,7 @@ public class Accessories extends JFrame {
 
         // Add the button panel to the left of the frame
         add(buttonPanel, BorderLayout.WEST);
+        buttonPanel.setBackground(new Color(255, 229, 204)); // Beige background
 
         // Panel to show the details of the selected accessory
         detailsPanel = new JPanel();
@@ -194,7 +201,7 @@ public class Accessories extends JFrame {
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(checkoutButton);
         super.add(bottomPanel, BorderLayout.SOUTH);
-         bottomPanel.setBackground(new Color(255, 229, 204)); // Beige background for the back button panel
+        bottomPanel.setBackground(new Color(255, 229, 204)); // Beige background for the back button panel
 
     }
 
@@ -283,7 +290,7 @@ public class Accessories extends JFrame {
         // Refresh the details panel
         detailsPanel.revalidate();
         detailsPanel.repaint();
-        
+
     }
 
     private void handleCheckout() {
